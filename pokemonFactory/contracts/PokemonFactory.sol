@@ -20,7 +20,7 @@ contract PokemonFactory {
             pokemons.push(Pokemon(_id, _name));
             pokemonToOwner[_id] = msg.sender;
             ownerPokemonCount[msg.sender]++;
-            emit eventNewPokemon(pokemons[_id]);
+            emit eventNewPokemon(Pokemon(_id, _name));
         }
 
         function getAllPokemons() public view returns (Pokemon[] memory) {
