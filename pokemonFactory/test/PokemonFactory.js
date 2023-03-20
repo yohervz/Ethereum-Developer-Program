@@ -22,4 +22,14 @@ describe("Smart Contract PokemonFactory", function () {
 
   });
 
+  it("The argument name of the function createPokemon must have greater that 2 characters", async function () {
+
+    const smartContract = await ethers.getContractFactory("PokemonFactory");
+
+    const hardhatSmart = await smartContract.deploy();
+
+    expect(await hardhatSmart.createPokemon("Pikachu", 1));
+
+  });
+
 });

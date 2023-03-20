@@ -17,10 +17,14 @@ contract PokemonFactory {
         mapping (address => uint) ownerPokemonCount;
 
         function createPokemon (string memory _name, uint _id) public {
+
             require(_id > 0, "The ID must be grater that 0");
+            require(bytes(_name).length > 2, "The name must have grater that 2 characters");
+
             pokemons.push(Pokemon(_id, _name));
             pokemonToOwner[_id] = msg.sender;
             ownerPokemonCount[msg.sender]++;
+            
             emit eventNewPokemon(Pokemon(_id, _name));
         }
 
