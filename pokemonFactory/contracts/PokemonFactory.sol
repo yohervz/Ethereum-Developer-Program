@@ -9,35 +9,50 @@ contract PokemonFactory {
     struct Pokemon {
         uint id;
         string name;
+        uint[] abilities;
     }
 
-        Pokemon[] private pokemons;
+    struct Abilities {
+        string name;
+        string description;
+    }
 
-        mapping (uint => address) public pokemonToOwner;
-        mapping (address => uint) ownerPokemonCount;
+    Pokemon[] private pokemons;
+    Abilities[] private abilitiesPokemon; //Each abilities will be indentify for a id
 
-        function createPokemon (string memory _name, uint _id) public {
+    mapping (uint => address) public pokemonToOwner;
+    mapping (address => uint) ownerPokemonCount;
 
-            require(_id > 0, "The ID must be grater that 0");
-            require(bytes(_name).length > 2, "The name must have grater that 2 characters");
+    constructor(){
+        createPokemonAbility("Name", "Description");
+    }
 
-            pokemons.push(Pokemon(_id, _name));
-            pokemonToOwner[_id] = msg.sender;
-            ownerPokemonCount[msg.sender]++;
-            
-            emit eventNewPokemon(Pokemon(_id, _name));
-        }
+    function createPokemon (string memory _name, uint _id, uint[] memory _abilities) public {
 
-        function getAllPokemons() public view returns (Pokemon[] memory) {
+        require(_id > 0, "The ID must be grater that 0");
+        require(bytes(_name).length > 2, "The name must have grater that 2 characters");
+
+        pokemons.push(Pokemon(_id, _name, _abilities));
+        pokemonToOwner[_id] = msg.sender;
+        ownerPokemonCount[msg.sender]++;
+
+        emit eventNewPokemon(Pokemon(_id, _name, _abilities));
+    }
+
+    function getAllPokemons() public view returns (Pokemon[] memory) {
         return pokemons;
-        }
+    }
 
 
-        function getResult() public pure returns(uint product, uint sum){
+    function getResult() public pure returns(uint product, uint sum){
         uint a = 1; 
         uint b = 2;
         product = a * b;
         sum = a + b; 
+    }
+
+    function createPokemonAbility(string memory _name, string memory _description) public {
+        abilitiesPokemon.push(Abilities({name: _name, description: _description}));
     }
 
 }
