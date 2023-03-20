@@ -12,4 +12,14 @@ describe("Smart Contract PokemonFactory", function () {
 
   });
 
+  it("The argument _id of the function createPokemon must be greater that 0", async function () {
+
+    const smartContract = await ethers.getContractFactory("PokemonFactory");
+
+    const hardhatSmart = await smartContract.deploy();
+
+    expect(await hardhatSmart.createPokemon("Pikachu", 1));
+
+  });
+
 });
